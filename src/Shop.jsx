@@ -1,31 +1,24 @@
 import React, { useState } from 'react';
 import './Shop.css'
 import { useEffect } from 'react';
+import axios from 'axios';
 
 export default function Shop() {
+    const url = 'https://symmetrical-space-invention-4j796jw54wq9h95g-5000.app.github.dev'
+    const [products, setProducts] = useState([])
+    useEffect(() => {
+        axios.get(`${url}/api/products`)
+            .then((response) => { setProducts(response.data) })
+            .catch(error => console.log(error))
 
+        return () => {
+
+        }
+    }, [])
     const [cart, setCart] = useState([])
     const [totalPrice, setTotalPrice] = useState(0)
 
-    const products = [
-        {
-            id: 0, name: "Notebook Acer Swift", price: 45900, img: "https://img.advice.co.th/images_nas/pic_product4/A0147295/A0147295_s.jpg"
-        },
-        {
-            id: 1, name: "Notebook Asus Vivo", price: 19900, img: "https://img.advice.co.th/images_nas/pic_product4/A0146010/A0146010_s.jpg"
-        },
-        {
-            id: 2, name: "Notebook Lenovo Ideapad", price: 32900, img: "https://img.advice.co.th/images_nas/pic_product4/A0149009/A0149009_s.jpg"
-        },
-        {
-            id: 3, name: "Notebook MSI Prestige", price: 54900, img: "https://img.advice.co.th/images_nas/pic_product4/A0149954/A0149954_s.jpg"
-        },
-        {
-            id: 4, name: "Notebook DELL XPS", price: 99900, img: "https://img.advice.co.th/images_nas/pic_product4/A0146335/A0146335_s.jpg"
-        },
-        {
-            id: 5, name: "Notebook HP Envy", price: 46900, img: "https://img.advice.co.th/images_nas/pic_product4/A0145712/A0145712_s.jpg"
-        }]
+
 
     const productList = products.map((item) => <Item key={item.id} {...item} callback={addCart} />)
     const cartList = cart.map((item, index) =>
